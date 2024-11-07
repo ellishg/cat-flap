@@ -15,9 +15,12 @@ struct Args {
 fn main() -> Result<()> {
     let args = Args::parse();
 
+    let mut line = String::new();
     for target in io::stdin().lines() {
         let target = target?;
-        let mut line = std::iter::repeat('A')
+        line = line
+            .chars()
+            .chain(std::iter::repeat('A'))
             .take(target.len())
             .collect::<String>();
         let blank_line = std::iter::repeat(' ')
