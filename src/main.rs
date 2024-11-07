@@ -20,7 +20,7 @@ fn main() -> Result<()> {
         let target = target?;
         line = line
             .chars()
-            .chain(std::iter::repeat('A'))
+            .chain(std::iter::repeat(' '))
             .take(target.len())
             .collect::<String>();
         let blank_line = std::iter::repeat(' ')
@@ -48,9 +48,9 @@ fn main() -> Result<()> {
 fn next_char(c: char, target: char) -> char {
     match c {
         c if c == target => target,
+        ' ' => 'A',
         'Z' => 'a',
-        'z' => ' ',
-        ' ' => '!',
+        'z' => '!',
         '@' => '[',
         '`' => '{',
         '~' => target,
@@ -83,7 +83,7 @@ mod tests {
         assert_eq!(next_char('~', 'X'), 'X');
         assert_eq!(next_char('~', '\t'), '\t');
 
-        let cycle = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz !\"#$%&'()*+,-./0123456789:;<=>?@[\\]^_`{|}~";
+        let cycle = " ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz!\"#$%&'()*+,-./0123456789:;<=>?@[\\]^_`{|}~";
         for (current, next) in cycle.chars().zip(cycle.chars().skip(1)) {
             assert_eq!(next_char(current, '\t'), next);
         }
